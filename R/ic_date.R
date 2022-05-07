@@ -10,15 +10,19 @@
 ic_datetime <- function(x) {
 
   # TODO (LH): regex check x timestamp
-  if(!is.na(x) & !x == "NA" & !grepl("^\\d{8}T\\d{6}Z?$", x)) {
-    # stop("time should be in this format: 20180809T160000Z")
-    warning("Non-standard time string: should be in this format: 20180809T160000Z")
-    x = ""
-  }
+  y <- as.POSIXct("", format = "%Y%m%d%H%M%S")
+  for(i in 1:length(x)) {
+    if(!is.na(x[i]) & !x[i] == "NA" & !grepl("^\\d{8}T\\d{6}Z?$", x[i])) {
+      # stop("time should be in this format: 20180809T160000Z")
+      warning("Non-standard time string: should be in this format: 20180809T160000Z")
+      x[i] = ""
+    }
 
-  plain <- gsub("[TZtz]", "", x)
-  datetime <- as.POSIXct(plain, format = "%Y%m%d%H%M%S")
-  datetime
+    plain <- gsub("[TZtz]", "", x[i])
+    datetime <- as.POSIXct(plain, format = "%Y%m%d%H%M%S")
+    y[i] <- datetime
+  }
+  y
 }
 #' Convert ical date into R date
 #' @inheritParams ic_find
