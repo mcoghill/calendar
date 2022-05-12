@@ -53,6 +53,7 @@ ic_char_datetime = function(x, zulu = FALSE) {
   if(zulu) {
     yr_ti <- paste0(yr_ti, "Z")
   }
+  yr_ti <- sub("NATNA|NATNAZ", "NA", yr_ti)
   yr_ti
 }
 #' @export

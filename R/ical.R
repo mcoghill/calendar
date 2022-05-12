@@ -103,5 +103,7 @@ ic_char_event <- function(ic, zulu = FALSE) {
   }
   char_names <- c(rep(c("BEGIN", names(ic), "END"), nrow(ic)))
   char_contents <-  apply(ic, 1, function(x) c("VEVENT", as.character(x), "VEVENT"))
-  paste(char_names, char_contents, sep = ":")
+  char_paste <- paste(char_names, char_contents, sep = ":")
+  char_out <- char_paste[-which(char_paste %in% c("DTSTART;VALUE=DATE:NA", "DTEND;VALUE=DATE:NA", "DTSTART:NA", "DTEND:NA"))]
+  char_out
 }
